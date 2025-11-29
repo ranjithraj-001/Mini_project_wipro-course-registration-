@@ -20,18 +20,15 @@ public class Homepage {
 	public static String studentName, adminName, adminUsername, studentId, studentClassLevel;
 	private static final HashMap<String, Float> grades = new HashMap<>();
 
-	public static void printWelcome() {
+	/*public static void printWelcome() {
 		System.out.println();
 		System.out.println("***************************************");
-		System.out.println("Welcome to CSC 540 Project Spring 2017");
+		System.out.println("---------------------------------");
 		System.out.println("***************************************");
 		System.out.println();
-	}
+	}*/
 
-	/*
-	 * 03/30/2017 dsuri - Danish Suri This method provides common login
-	 * interface for both Admin and Student
-	 */
+	
 	public static void loginUser() {
 		System.out.println("Enter Username:");
 		String username = in.next();
@@ -75,8 +72,7 @@ public class Homepage {
 				studentName = name;
 				welcomeStudent(name, stu_id);
 			}
-			// else
-			// student home page
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,10 +81,7 @@ public class Homepage {
 
 	}
 
-	/*
-	 * 03/30/2017 dsuri - Danish Suri This method is used by Admin to add New
-	 * Student in the Database
-	 */
+	
 	public static void enterNewStudent() throws Exception {
 		System.out.println("*********************");
 		System.out.println("Enter a new Student");
@@ -122,9 +115,7 @@ public class Homepage {
 		String date = in.next();
 
 		Date dob = Date.valueOf(date);
-		// System.out.println("Please enter a valid input in yyyy-mm-dd
-		// format");
-		// System.out.println(dob);
+		
 
 		query = "insert into STUDENT(STUDENT_ID,F_NAME, l_name, gpa, email, password, "
 				+ "current_credits,residency, class_level, department, "
@@ -152,19 +143,14 @@ public class Homepage {
 
 	}
 
-	/*
-	 * 03/30/2017 dsuri - Danish Suri This method is used by Admin to view
-	 * details of a Student using their Student ID
-	 */
+	
 	public static void viewStudent() throws Exception {
 		System.out.println("*********************");
 		System.out.println("Search Student");
 		System.out.println("*********************");
 		System.out.print("Enter Student ID: ");
 		String stu_id = in.next();
-		// query = "SELECT s.f_name, s.l_name, s.DOB,
-		// s.EMAIL,e.course_id,e.grade " + "FROM enrollment e, student s "
-		// + "WHERE s.STUDENT_ID=? and s.STUDENT_ID=e.STUDENT_ID";
+		
 		query = "SELECT f_name, l_name, DOB, EMAIL, residency, class_level, gpa, pending_bill " + "FROM student "
 				+ "WHERE STUDENT_ID=?";
 		preparedStatement = conn.prepareStatement(query);
@@ -187,10 +173,7 @@ public class Homepage {
 			if (pendingBill > 0)
 				System.out.println("Pending Bill: " + pendingBill);
 			System.out.println("GPA: " + gpa);
-			// String course_id = rs.getString("course_id");
-			// String grade = rs.getString("grade");
-			// System.out.println("Press 1 to Enter Grdaes for " + fname+"
-			// "+lname + "\nPress 0 to exit");
+			
 			System.out.println("\n\nPress 0 to Exit");
 			System.out.println("Press 1 to View/Add Grades");
 			int input = in.nextInt();
@@ -209,10 +192,7 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 03/30/2017 dsuri - Danish Suri This method is used by Admin to view a
-	 * Student's grade
-	 */
+	
 
 	public static void viewGrades(String studentId, String name) throws Exception {
 		query = "SELECT e.course_id,e.grade " + "FROM enrollment e, student s "
@@ -254,10 +234,7 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 03/30/2017 dsuri - Danish Suri This method is used by Admin to add Grades
-	 * of a Student in the courses they have enrolled
-	 */
+	
 	public static void enterGrades(String studentId) throws Exception {
 		query = "SELECT e.course_id,e.grade " + "FROM enrollment e " + "WHERE e.STUDENT_ID = " + studentId;
 		preparedStatement = conn.prepareStatement(query);
@@ -290,9 +267,7 @@ public class Homepage {
 
 	}
 
-	/*
-	 * 03/30/2017 dsuri - Danish Suri This is helper method to update GPA
-	 */
+	
 
 	public static void updateGPA(String studentID) throws Exception {
 		float gpa, num = 0;
@@ -321,10 +296,7 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 03/30/2017 dsuri - Danish Suri This method is used by Admin to view
-	 * Pending Requests and Approve them
-	 */
+	
 	public static void viewPendingRequests(String adminName, String userName) throws Exception {
 		query = "SELECT * FROM PENDING_PERMISSIONS WHERE PERMISSION = 'Pending'";
 		preparedStatement = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -371,7 +343,7 @@ public class Homepage {
 				break;
 
 			case 0:
-				// go to previous menu
+				
 				break;
 			}
 			preparedStatement = conn.prepareStatement(query);
@@ -386,10 +358,7 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 03/30/2017 dsuri - Danish Suri Helper Method to fetch Classification
-	 * Level
-	 */
+	
 	private static String getClassificationLevel() {
 		System.out.println("Enter\n 1 for Undergraduate \n 2 for Graduate");
 		int opt = in.nextInt();
@@ -410,9 +379,7 @@ public class Homepage {
 		return class_level;
 	}
 
-	/*
-	 * 03/30/2017 dsuri - Danish Suri Helper Method to fetch Residency
-	 */
+	
 	private static String getResidency() {
 		System.out.println("Enter\n 1 for in-state\n 2 for out-state\n 3 for international");
 		int opt = in.nextInt();
@@ -436,10 +403,7 @@ public class Homepage {
 		return residency;
 	}
 
-	/*
-	 * 03/30/2017 jkumar3 - Jitin Kumar This method shall be used by
-	 * administrator to view all courses
-	 */
+	
 	private static void viewCourses(String adminName, String userName) {
 		System.out.println("Displaying all courses:\n");
 		try {
@@ -452,8 +416,7 @@ public class Homepage {
 				String class_level = rs.getString("CLASS_LEVEL");
 				String department = rs.getString("DEPARTMENT");
 				System.out.println(String.format("| %-10s\t | \t %-35s\t | \t %-5s |", course_id, title, department));
-				// System.out.println(course_id +
-				// "\t\t"+title+"\t\t"+class_level+"\t\t"+department);
+				
 			}
 
 		} catch (SQLException e) {
@@ -466,16 +429,13 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 03/30/2017 jkumar3 - Jitin Kumar This method shall be used by
-	 * administrator to view a course by id
-	 */
+	
 	private static void viewCoursesById(String adminName, String userName) {
-		// System.out.println("Enter the Course ID");
+		
 		System.out.println("Displaying course by Course ID");
 		System.out.println("Enter Course ID: ");
 		String selectCID = "select * from courses where COURSE_ID = ?";
-		String courseID = in.next().toUpperCase(); // TO DO: Input from user
+		String courseID = in.next().toUpperCase(); 
 		try {
 			preparedStatement = conn.prepareStatement(selectCID, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
@@ -487,8 +447,7 @@ public class Homepage {
 				String class_level = rs.getString("CLASS_LEVEL");
 				String department = rs.getString("DEPARTMENT");
 				System.out.println(String.format("| %-5s\t | \t %-35s\t | \t %-5s |", course_id, title, department));
-				// System.out.println(course_id +
-				// "\t\t"+title+"\t\t"+class_level+"\t\t"+department);
+				
 			}
 			rs.last();
 			int curr = rs.getRow();
@@ -508,28 +467,24 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 03/30/2017 jkumar3 - Jitin Kumar This method shall be used by
-	 * administrator to add a new course
-	 */
+	
 	private static void addCourse(String adminName, String userName) {
 		System.out.println("Adding new Course");
 		System.out.println("Enter Course ID: ");
-		String courseID = in.next(); // TO DO: Input from user
+		String courseID = in.next(); 
 		System.out.println("Enter Course Title: ");
-		String courseTitle = in.next(); // TO DO: Input from user
+		String courseTitle = in.next();
 		System.out.println("Enter minimum credits: ");
-		int minCredits = in.nextInt(); // TO DO: Input from user
+		int minCredits = in.nextInt(); 
 		System.out.println("Enter maximum credits: ");
-		int maxCredits = in.nextInt(); // TO DO: Input from user
+		int maxCredits = in.nextInt(); 
 		System.out.println("Enter minimum GPA required: ");
-		float minGPA = in.nextFloat(); // TO DO: Input from user
-		/* user input for class level */
+		float minGPA = in.nextFloat(); 
 		int classLevel = 0;
 		while (true) {
 			System.out.println("Enter Class Level: 1 for Graduate, 2 for Undergrad ");
 			try {
-				classLevel = in.nextInt(); // TO DO: Input from user
+				classLevel = in.nextInt(); 
 				if (classLevel != 1 && classLevel != 2) {
 					throw new Exception();
 				} else {
@@ -540,8 +495,7 @@ public class Homepage {
 			}
 		}
 		System.out.println("Enter Department: ");
-		String dept = in.next(); // TO DO: Input from user
-		/* user input special permission */
+		String dept = in.next(); 
 
 		String splPermStr = "";
 		String preCID = "";
@@ -553,7 +507,7 @@ public class Homepage {
 			preCourseGrade = 0.0f;
 
 			try {
-				int splPerm = in.nextInt(); // TO DO: Input from user
+				int splPerm = in.nextInt(); 
 				if (splPerm != 1 && splPerm != 2 && splPerm != 3 && splPerm != 0) {
 					throw new Exception();
 				} else {
@@ -561,7 +515,7 @@ public class Homepage {
 						splPermStr = "None";
 					} else if (splPerm == 1) {
 						System.out.println("Enter Prerequisite Course ID: ");
-						preCID = in.next(); // TO DO: Input from user
+						preCID = in.next(); 
 						System.out.println("Enter prerequisite course grade requirement: ");
 						preCourseGrade = in.nextFloat();
 						splPermStr = "Prereq";
@@ -570,7 +524,7 @@ public class Homepage {
 						splPermStr = "SPP";
 					} else {
 						System.out.println("Enter Prerequisite Course ID: ");
-						preCID = in.next(); // TO DO: Input from user
+						preCID = in.next(); 
 						System.out.println("Enter prerequisite course grade requirement: ");
 						preCourseGrade = in.nextFloat();
 						splPermStr = "SPPERM";
@@ -602,7 +556,7 @@ public class Homepage {
 			int result = preparedStatement.executeUpdate();
 			System.out.println("Course added successfully");
 			System.out.println();
-			/* adding prerequisite course */
+			
 			if (preCID != null && preCID.length() > 0) {
 				String insertPrerCourseSQL = "insert into PREREQ(PREREQ_CID,GRADE_REQ,COURSE_ID) values(?,?,?)";
 				preparedStatement = conn.prepareStatement(insertPrerCourseSQL);
@@ -626,10 +580,7 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 04/03/2017 dsuri - Danish Suri This method is used Student to drop
-	 * courses
-	 */
+	
 	private static void dropCourse(String studentID, String courseID) throws Exception {
 
 		query = "SELECT DROP_DEAD FROM SESSIONS WHERE SESSION_ID=?";
@@ -667,10 +618,7 @@ public class Homepage {
 
 	}
 
-	/*
-	 * 04/03/2017 dsuri - Danish Suri This is a helper method to update current
-	 * credits of a student
-	 */
+	
 
 	private static void updateCredits(String studentId) throws Exception {
 		query = "SELECT CREDITS FROM ENROLLMENT WHERE STUDENT_ID =? AND STATUS='Enrolled' AND SESSION_ID =?";
@@ -694,10 +642,7 @@ public class Homepage {
 
 	}
 
-	/*
-	 * 03/31/2017 jkumar3 - Jitin Kumar This method shall be used by
-	 * administrator to view a course offering
-	 */
+	
 	private static void viewCourseOffering(String adminName, String userName) {
 		System.out.println("Displaying all course offerings:\n");
 		try {
@@ -729,10 +674,7 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 03/31/2017 jkumar3 - Jitin Kumar This method shall be used by
-	 * administrator to add a new course offering
-	 */
+	
 	private static void addCourseOffering(String adminName, String userName) {
 		System.out.println("Adding new Course Offering");
 		// creating schedule
@@ -749,7 +691,7 @@ public class Homepage {
 		System.out.println("Enter Location:");
 		String location = in.next();
 		System.out.println("Enter Course ID: ");
-		String courseId = in.next(); // TO DO: Input from user
+		String courseId = in.next();
 		String createScheduleSQL = null;
 		if (day2 == "null") {
 			createScheduleSQL = "insert into schedule(DAY,start_time,end_time,location,course_id,session_id) values(?,?,?,?,?,?)";
@@ -768,7 +710,7 @@ public class Homepage {
 				preparedStatement.setString(7, day2);
 			}
 			int result = preparedStatement.executeUpdate();
-			// System.out.println("insert course result = " + result);
+			
 			if (result == 1) {
 				System.out.println("Schedule added successfully");
 			} else {
@@ -777,17 +719,13 @@ public class Homepage {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// creating schedule -end
+		
 		System.out.println("Enter Instructor ID: ");
-		String instrId = in.next(); // TO DO: Input from user
-		// System.out.println("Enter Session ID: ");
-		// String sessionId = in.next(); // TO DO: Input from user
-		// System.out.println("Enter Schedule ID: ");
-		// String scheduleId = in.next(); // TO DO: Input from user
+		String instrId = in.next(); 
 		System.out.println("Enter Max Capacity: ");
-		int capacity = in.nextInt(); // TO DO: Input from user
+		int capacity = in.nextInt();
 		System.out.println("Enter Current Waitlist Count: ");
-		int waitlistCnt = in.nextInt(); // TO DO: Input from user
+		int waitlistCnt = in.nextInt(); 
 		String insertCourseOfferingSQL = "insert into COURSE_OFFERED(COURSE_ID,INSTR_ID,session_id,schedule_id,max_student,waitlist) values(?,?,?,(select max(SCHEDULE_ID) from SCHEDULE),?,?)";
 		try {
 			preparedStatement = conn.prepareStatement(insertCourseOfferingSQL);
@@ -811,10 +749,7 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 03/31/2017 - Jitin Kumar This method shall be used to input time in 24
-	 * hour format
-	 */
+	
 	private static String getTimeInput(String displayStr) {
 		String time = null;
 		while (true) {
@@ -832,15 +767,11 @@ public class Homepage {
 		return time;
 	}
 
-	/*
-	 * 03/31/2017 - Jitin Kumar This method shall be used to input day
-	 */
+	
 	private static String getDayInput(String displayStr, boolean isNullAllowed) {
 		int day = 0;
 		while (true) {
 			try {
-				// System.out.println("in try again");
-				// in.next();
 				day = Integer.parseInt(in.next());
 				if (isNullAllowed) {
 					if (day < 0 || day > 5) {
@@ -884,10 +815,7 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 03/31/2017 dsuri - Danish Suri This method is used by Admin to view their
-	 * Profile
-	 */
+
 	public static void viewAdminProfile(String adminName, String adminUsername) throws Exception {
 		query = "select f_name,L_NAME,EMAIL,ADDRESS,DOB from ADMINISTRATOR where username=?";
 		preparedStatement = conn.prepareStatement(query);
@@ -916,10 +844,6 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 03/31/2017 dsuri - Danish Suri This method is used by Admin to edit their
-	 * Profile
-	 */
 	public static void editAdminProfile(String adminUsername) throws Exception {
 		System.out.print("Enter First Name: ");
 		in.nextLine();
@@ -951,10 +875,6 @@ public class Homepage {
 
 	}
 
-	/*
-	 * 03/31/2017 dsuri - Danish Suri This method is used by Student to view
-	 * their Profile
-	 */
 	public static void viewStudentProfile(String student_id) throws Exception {
 		query = "select f_name,L_NAME,GPA,EMAIL,DEPARTMENT from student where student_id=?";
 		preparedStatement = conn.prepareStatement(query);
@@ -965,7 +885,6 @@ public class Homepage {
 			System.out.println("Name: " + rs.getString("f_name") + " " + rs.getString("l_name"));
 			System.out.println("GPA: " + rs.getFloat("gpa") + "");
 			System.out.println("Email: " + rs.getString("email"));
-			// System.out.println("Address: "+rs.getString("Address"));
 			System.out.println("Department: " + rs.getString("department"));
 		}
 		System.out.println("***************************************\n\n");
@@ -983,10 +902,6 @@ public class Homepage {
 
 	}
 
-	/*
-	 * 03/31/2017 dsuri - Danish Suri This method is used by Student to edit
-	 * their Profile
-	 */
 	public static void updateStudentProfile(String student_id) throws Exception {
 		System.out.print("Enter First Name: ");
 		String fname = in.next();
@@ -1012,10 +927,6 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 03/31/2017 dsuri - Danish Suri This method is used by Student to view
-	 * their Enrolled Courses
-	 */
 	public static void viewMyCourses(String student_id) throws Exception {
 
 		query = "SELECT c.course_id,c.title,e.grade,i.instr_name, e.session_id "
@@ -1026,7 +937,7 @@ public class Homepage {
 		preparedStatement.setString(1, student_id);
 		rs = preparedStatement.executeQuery();
 
-		// Formatting Output
+		
 		for (int i = 0; i < 150; i++) {
 			System.out.print("_");
 		}
@@ -1037,7 +948,7 @@ public class Homepage {
 			System.out.print("_");
 		}
 		System.out.println("");
-		// Formatting Ends here
+		
 
 		while (rs.next()) {
 			String course_name = rs.getString("title");
@@ -1061,10 +972,7 @@ public class Homepage {
 			welcomeStudent(studentName, student_id);
 	}
 
-	/*
-	 * 03/31/2017 dsuri - Danish Suri This method is used by Student to view all
-	 * current courses which are being offered
-	 */
+	
 	public static void viewAllCurrentCourses() throws Exception {
 		query = "select c.course_id,c.title, i.instr_name,i.instr_id, co.max_student, "
 				+ "sc.day, sc.day2, sc.start_time, sc.end_time, " + "sc.location "
@@ -1109,10 +1017,6 @@ public class Homepage {
 
 	}
 
-	/*
-	 * 03/31/2017 dsuri - Danish Suri This method is used by Student to view
-	 * their Grades and GPA
-	 */
 	public static void displayGrades(int option, String student_id) throws Exception {
 		if (option == 1) {
 			query = "select e.course_id,e.grade " + "from enrollment e, student s "
@@ -1147,10 +1051,6 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 03/31/2017 dsuri - Danish Suri This method is used by Student to view
-	 * their Pending Bill and to Pay Bill
-	 */
 	public static void viewBill(String student_id) throws Exception {
 		query = "select pending_bill from student where student_id =?";
 		preparedStatement = conn.prepareStatement(query);
@@ -1188,10 +1088,6 @@ public class Homepage {
 
 	}
 
-	/*
-	 * 04/1/2017 dsuri - Danish Suri This is a helper method used to check if
-	 * Student should be in waitlist, enroll or rejected
-	 */
 
 	public static void checkEnrollmentStatus(String courseId, String studentId, String instrId) throws Exception {
 		int count = 0, total = 0, waitlist = 0;
@@ -1255,9 +1151,6 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 04/03/2017 dsuri - Danish Suri This is a helper method to update bill
-	 */
 
 	public static int updateBill(String studentId) throws Exception {
 		query = " UPDATE STUDENT s " + "Set s.PENDING_BILL = " + "(SELECT COST_CREDIT FROM BILLING "
@@ -1268,10 +1161,6 @@ public class Homepage {
 		return preparedStatement.executeUpdate();
 	}
 
-	/*
-	 * 03/31/2017 dsuri - Danish Suri This method is used by Student to view
-	 * their Pending Course Permission Requests Status
-	 */
 	public static void viewPendingCourses(String student_id) throws Exception {
 		query = "SELECT * FROM PENDING_PERMISSIONS WHERE STUDENT_ID = ? and PERMISSION = 'Pending' OR PERMISSION = 'Rejected'";
 		preparedStatement = conn.prepareStatement(query);
@@ -1294,9 +1183,7 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 04/3/2017 dsuri - Danish Suri Used by admin to enforce drop deadline
-	 */
+	
 	public static void enforceDropDeadline() throws Exception {
 		System.out.println("\n\nAre you sure you want to enforce drop deadline? y/n");
 		String s = in.next();
@@ -1317,9 +1204,6 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 03/30/2017 dsuri - Danish Suri Helper Method called after Admin Logins
-	 */
 	public static void welcomeAdmin(String adminName, String userName) {
 		System.out.println();
 		System.out.println("***************************************");
@@ -1446,9 +1330,7 @@ public class Homepage {
 
 	}
 
-	/*
-	 * 03/31/2017 dsuri - Danish Suri Helper Method called after Student Logins
-	 */
+	
 	public static void welcomeStudent(String studentName, String student_id) throws Exception {
 		System.out.println();
 		System.out.println("***************************************");
@@ -1514,16 +1396,13 @@ public class Homepage {
 		}
 	}
 
-	/*
-	 * 02/04/2017 - Jitin Kumar This method shall be used to enroll the courses
-	 */
+	
 	private static void enrollCourse(String studentId) {
 		System.out.println("Enroll for new Course\n\n");
 		System.out.println("Enter Course ID: ");
-		String courseId = in.next(); // TO DO: Input from user
+		String courseId = in.next();
 		System.out.println("Enter Instructor ID:");
-		String instrID = in.next(); // TO DO: Input from user
-		// checking conflicting schedule
+		String instrID = in.next(); 
 		String query = "select * from schedule where course_id like ? and session_id like ?";
 		try {
 			preparedStatement = conn.prepareStatement(query);
