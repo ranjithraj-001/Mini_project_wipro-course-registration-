@@ -1,17 +1,7 @@
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-/**
- *
- * @author Vivek
- */
 public class JDBC_Connection {
 	static final String jdbcURL = "jdbc:oracle:thin:@orca.csc.ncsu.edu:1521:orcl01";
 	private static String user_name = Creds.userName;
@@ -32,13 +22,10 @@ public class JDBC_Connection {
 				conn = DriverManager.getConnection(jdbcURL, user_name, password);
 
 			} catch (Exception e) {
-				// TODO: handle exception
+				
 				e.printStackTrace();
 			}
-			// finally {
-			//
-			// close(conn);
-			// }
+			
 		} catch (Throwable oops) {
 			oops.printStackTrace();
 		}
