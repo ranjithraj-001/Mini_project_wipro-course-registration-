@@ -1,46 +1,21 @@
 import java.sql.*;
-
 public class first_example {
-
 	static final String jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
-
-
 	public static void main(String[] args) {
 		try {
-
-			// Load the driver. This creates an instance of the driver
-			// and calls the registerDriver method to make Oracle Thin
-			// driver available to clients.
-
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			// JDBC_NCSU_PASS
-			// JDBC_NCSU_UN
 			System.out.println(System.getenv("JDBC_NCSU_UN"));
-			String user = "system"; // For example, "jsmith"
-			String passwd = "8725"; // Your 9 digit student ID number
-
+			String user = "system"; 
+			String passwd = "8725"; 
 			Connection conn = null;
 			Statement stmt = null;
 			ResultSet rs = null;
-
 			try {
-
-				// Get a connection from the first driver in the
-				// DriverManager list that recognizes the URL jdbcURL
-
 				conn = DriverManager.getConnection(jdbcURL, user, passwd);
-
-				// Create a statement object that will be sending your
-				// SQL statements to the DBMS
-
 				stmt = conn.createStatement();
-
-				// Create the COFFEES table
 
 				stmt.executeUpdate("CREATE TABLE COFFEES1 " + "(COF_NAME VARCHAR(32), SUP_ID INTEGER, "
 						+ "PRICE FLOAT, SALES INTEGER, TOTAL INTEGER)");
-
-				// Populate the COFFEES table
 
 				stmt.executeUpdate("INSERT INTO COFFEES1 " + "VALUES ('Colombian', 101, 7.99, 0, 0)");
 
@@ -52,13 +27,7 @@ public class first_example {
 
 				stmt.executeUpdate("INSERT INTO COFFEES1 " + "VALUES ('French_Roast_Decaf', 49, 9.99, 0, 0)");
 
-				// Get data from the COFFEES table
-
 				rs = stmt.executeQuery("SELECT COF_NAME, PRICE FROM COFFEES1");
-
-				// Now rs contains the rows of coffees and prices from
-				// the COFFEES table. To access the data, use the method
-				// NEXT to access all rows in rs, one row at a time
 
 				while (rs.next()) {
 					String s = rs.getString("COF_NAME");
